@@ -14,3 +14,5 @@ JSON.parse(JSON.minify(str));
 
 Now you can maintain development-friendly JSON documents, but minify them before
 parsing or before transmitting them over-the-wire.
+
+NOTE: you're stupid if you really think this is for anything other than server-side JS.
