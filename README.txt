@@ -3,7 +3,8 @@
 	MIT License
 */
 
-JSON.minify() minifies blocks of JSON by removing all whitespace *and* comments.
+JSON.minify() minifies blocks of JSON-like content into valid JSON by removing all 
+whitespace *and* comments.
 
 JSON.parse() does not consider JSON with comments to be valid and parseable. So,
 the intended usage is to minify development-friendly JSON (with comments) to
