@@ -41,11 +41,21 @@ something else */"blah"
 <textarea id="new_json2" cols="50" rows="12"></textarea>
 
 
+<p>test #3</p>
+<textarea id="orig_json3" cols="50" rows="12">
+{"foo": "ba\"r//", "bar\\": "b\\\"a/*z", 
+	"baz\\\\": /* yay */ "fo\\\\\"*/o" 
+}
+</textarea>
+<p>result #3</p>
+<textarea id="new_json3" cols="50" rows="12"></textarea>
+
+
 
 <script type="text/javascript">
 
 var old;
-for (var i=1; i<=2; i++) {
+for (var i=1; i<=3; i++) {
 	old = document.getElementById("orig_json"+i).value;
 	document.getElementById("new_json"+i).value = JSON.minify(old);
 }
