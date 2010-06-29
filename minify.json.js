@@ -8,7 +8,7 @@
 		global.JSON = {};
 	}
 	
-	global.JSON.minify = function(str) {
+	global.JSON.minify = function(json) {
 		
 		var tokenizer = /"|(\/\*)|(\*\/)|(\/\/)|\n|\r/g,
 			in_string = false,
@@ -19,7 +19,7 @@
 		
 		tokenizer.lastIndex = 0;
 		
-		while (tmp = tokenizer.exec(str)) {
+		while (tmp = tokenizer.exec(json)) {
 			lc = RegExp.leftContext;
 			rc = RegExp.rightContext;
 			if (!in_multiline_comment && !in_singleline_comment) {
@@ -37,6 +37,7 @@
 					in_string = !in_string;
 				}
 				from--; // include " character in next catch
+				rc = json.substring(from);
 			}
 			else if (tmp[0] == "/*" && !in_string && !in_multiline_comment && !in_singleline_comment) {
 				in_multiline_comment = true;
