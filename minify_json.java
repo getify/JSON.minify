@@ -5,7 +5,7 @@
 //  Created by Bernhard Gass on 8/01/13.
 //  Copyright © 2013 Bernhard Gass. All rights reserved.
 
-package com.ariba.interview;
+package com.changeme.json;
 
 import java.util.ArrayList;
 import java.util.List;
