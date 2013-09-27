@@ -29,7 +29,7 @@ def json_minify(string, strip_space=True):
             tmp = string[index:match.start()]
             if not in_string and strip_space:
                 # replace white space as defined in standard
-                tmp = re.sub('[ \t\n\r]*', '', tmp)
+                tmp = re.sub('[ \t\n\r]+', '', tmp)
             new_str.append(tmp)
 
         index = match.end()
