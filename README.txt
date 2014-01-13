@@ -29,6 +29,18 @@ is for.
 The first implementation of JSON.minify() is in JavaScript, but the intent is to
 port the implementation to as many other environments as possible/practical.
 
+----------
+To use in node via npm:
+
+npm install node-json-minify
+
+Then in code:
+
+JSON.minify = JSON.minify || require("node-json-minify");
+
+var myjson = JSON.minify( '{ /* comment */ "foo": 42 \n }' ); // {"foo":42}
+----------
+
 NOTE: As transmitting bloated (ie, with comments/whitespace) JSON would be wasteful
 and silly, this JSON.minify() is intended for use in server-side processing
 environments where you can strip comments/whitespace from JSON before parsing
