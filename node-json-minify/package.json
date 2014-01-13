@@ -10,6 +10,6 @@
 		}
 	],
 	"repository"    : {"type": "git", "url": "git://github.com/getify/JSON.minify.git"},
-	"main": "minify.json.js",
-	"version": "0.1.2-a"
+	"main": "json.minify.js",
+	"version": "0.1.3-a"
 }
