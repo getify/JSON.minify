@@ -1,11 +1,9 @@
 /*! JSON.minify()
-	v0.1 (c) Kyle Simpson
+	v0.1.3-a (c) Kyle Simpson
 	MIT License
 */
 
-//(function(){
-	
-exports = function(json) {
+module.exports = function(json) {
 	
 	var tokenizer = /"|(\/\*)|(\*\/)|(\/\/)|\n|\r/g,
 		in_string = false,
@@ -55,4 +53,4 @@ exports = function(json) {
 	new_str[ns++] = rc;
 	return new_str.join("");
 };
-//})(this);
+
