@@ -39,9 +39,18 @@ Then in code:
 JSON.minify = JSON.minify || require("node-json-minify");
 
 var myjson = JSON.minify( '{ /* comment */ "foo": 42 \n }' ); // {"foo":42}
+
+----------
+
+For in-browser use, you may download from the jsDelivr CDN:
+<script src='//cdn.jsdelivr.net/json-minify/latest/minify.json.min.js'></script>
+or to use Kit's fork:
+<script src='//cdn.jsdelivr.net/json-minify/latest/minify-sans-regexp.min.js'></script>
 ----------
 
 NOTE: As transmitting bloated (ie, with comments/whitespace) JSON would be wasteful
-and silly, this JSON.minify() is intended for use in server-side processing
+and silly, this JSON.minify() is intended for: server-side processing
 environments where you can strip comments/whitespace from JSON before parsing
 a JSON document, or before transmitting such over-the-wire from server to browser.
+Also helpful during development, where your source is formmated & commented,
+then deploy a minified version.
