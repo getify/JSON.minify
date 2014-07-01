@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>QUnit Test Suite</title>
+	<link rel="stylesheet" href="qunit/qunit.css" type="text/css" media="screen">
+	<script type="text/javascript" src="qunit/qunit.js"></script>
+	<script src="../json2.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../minify.json.js" type="text/javascript" charset="utf-8"></script>
+	<script src="tests.js" type="text/javascript" charset="utf-8"></script>
+	
+	
+</head>
+
+<body>
+	<h1 id="qunit-header">QUnit Test Suite</h1>
+	<h2 id="qunit-banner"></h2>
+	<div id="qunit-testrunner-toolbar"></div>
+	<h2 id="qunit-userAgent"></h2>
+	<ol id="qunit-tests"></ol>
+	<div id="qunit-fixture"><p>test #1</p> 
+<textarea id="orig_json1" cols="50" rows="12"> 
+// this is a JSON file with comments
+{
+	"foo": "bar",	// this is cool
+	"bar": [
+		"baz", "bum", "zam"
+	],
+/* the rest of this document is just fluff
+   in case you are interested. */
+	"something": 10,
+	"else": 20
+}
+ 
+/* NOTE: You can easily strip the whitespace and comments 
+   from such a file with the JSON.minify() project hosted 
+   here on github at http://github.com/getify/JSON.minify 
+*/
+</textarea> 
+<p>result #1</p> 
+<textarea id="new_json1" cols="50" rows="12"></textarea> 
+ 
+ 
+<p>test #2</p> 
+<textarea id="orig_json2" cols="50" rows="12"> 
+ 
+{"/*":"*/","//":"",/*"//"*/"/*/"://
+"//"}
+ 
+</textarea> 
+<p>result #2</p> 
+<textarea id="new_json2" cols="50" rows="12"></textarea> 
+ 
+ 
+<p>test #3</p> 
+<textarea id="orig_json3" cols="50" rows="12"> 
+/*
+this is a 
+multi line comment */{
+ 
+"foo"
+:
+	"bar/*"// something
+	,	"b\"az":/*
+something else */"blah"
+ 
+}
+</textarea> 
+<p>result #3</p> 
+<textarea id="new_json3" cols="50" rows="12"></textarea> 
+ 
+ 
+<p>test #4</p> 
+<textarea id="orig_json4" cols="50" rows="12"> 
+{"foo": "ba\"r//", "bar\\": "b\\\"a/*z", 
+	"baz\\\\": /* yay */ "fo\\\\\"*/o" 
+}
+</textarea> 
+<p>result #4</p> 
+<textarea id="new_json4" cols="50" rows="12"></textarea> 
+ </div>
+	
+	
+</body>
+</html>

@@ -33,7 +33,7 @@
 			
 			if (tmp[0] == "\"" && !in_multiline_comment && !in_singleline_comment) {
 				tmp2 = lc.match(/(\\)*$/);
-				if (!in_string || !tmp2 || (tmp2[0].length % 2) == 0) {	// start of string with ", or unescaped " character found to end string
+				if (!in_string || !tmp2 || (tmp2[0].length % 2) === 0) {	// start of string with ", or unescaped " character found to end string
 					in_string = !in_string;
 				}
 				from--; // include " character in next catch
