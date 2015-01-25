@@ -1,9 +1,9 @@
 //
 //  NSString+minifyJSONString.h
-//  jsonminifier
+//  JSON.minify
 //
-//  Created by Bödecs Tibor on 7/19/13.
-//  Copyright (c) 2013 Bödecs Tibor. All rights reserved.
+//  Created by Tibor Bodecs on 7/19/13.
+//  Copyright (c) 2013 Tibor Bodecs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
