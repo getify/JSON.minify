@@ -1,4 +1,6 @@
-Test JSON #1:
+# Tests for JSON.minify
+
+#### Test 1
 
 ```js
 // this is a JSON file with comments
@@ -19,13 +21,15 @@ Test JSON #1:
 */
 ```
 
-Minified Result #1:
+Expected Result:
 
 ```js
 {"foo":"bar","bar":["baz","bum","zam"],"something":10,"else":20}
 ```
 
-Test JSON #2:
+-----
+
+#### Test 2
 
 ```js
 
@@ -34,13 +38,14 @@ Test JSON #2:
 
 ```
 
-Minified Result #2:
-
+Expected Result:
 ```js
 {"/*":"*/","//":"","/*/":"//"}
 ```
 
-Test JSON #3:
+-----
+
+#### Test 3
 
 ```js
 /*
@@ -56,13 +61,15 @@ something else */"blah"
 }
 ```
 
-Minified Result #3:
+Expected Result
 
 ```js
 {"foo":"bar/*","b\"az":"blah"}
 ```
 
-Test JSON #4:
+-----
+
+#### Test 4
 
 ```js
 {"foo": "ba\"r//", "bar\\": "b\\\"a/*z",
@@ -70,7 +77,7 @@ Test JSON #4:
 }
 ```
 
-Minified Result #4:
+Expected Result
 
 ```js
 {"foo":"ba\"r//","bar\\":"b\\\"a/*z","baz\\\\":"fo\\\\\"*/o"}
