@@ -1,6 +1,6 @@
 # `JSON-minify`
 
-A port of the `JSON-minify` utility to the *** language.
+A port of the `JSON-minify` utility to the <target-language-name> language.
 
 ## Overview
 
