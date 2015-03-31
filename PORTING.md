@@ -1,4 +1,4 @@
-# Porting `JSON-minify`
+# Porting JSON-minify
 
 Thanks for agreeing to help port this utility to another language!
 
