@@ -1,6 +1,6 @@
 # JSON-minify
 
-A port of the `JSON-minify` utility to the [target-language-name] language.
+A port of the `JSON-minify` utility to the JavaScript language.
 
 ## Overview
 
@@ -8,13 +8,15 @@ A port of the `JSON-minify` utility to the [target-language-name] language.
 
 With `JSON-minify`, you can maintain developer-friendly JSON documents, but minify them before parsing or transmitting them over-the-wire.
 
-## Porting
-
-Please see [PORTING.md](PORTING.md) for instructions.
-
 ## Testing
 
-Please see [TESTING.md](TESTING.md) for example tests.
+To run the tests in the browser, open `tests.html`.
+
+To run the tests from the command line (with node):
+
+```
+cat minify.json.js tests.js | node
+```
 
 ## License
 
