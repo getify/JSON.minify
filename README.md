@@ -8,13 +8,10 @@ A port of the `JSON-minify` utility to the [target-language-name] language.
 
 With `JSON-minify`, you can maintain developer-friendly JSON documents, but minify them before parsing or transmitting them over-the-wire.
 
-## Porting
-
-Please see [PORTING.md](PORTING.md) for instructions.
-
 ## Testing
+To run the tests, just execute json_minify.py, i.e.
 
-Please see [TESTING.md](TESTING.md) for example tests.
+    python json_minify.py
 
 ## License
 
