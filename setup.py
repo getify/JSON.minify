@@ -20,7 +20,7 @@ setup(
     maintainer="Pradyun S. Gedam",
     maintainer_email="pradyunsg@gmail.com",
 
-    py_modules=["json_minify"],
+    packages=["json_minify"],
 
     license="MIT",
     classifiers=[
