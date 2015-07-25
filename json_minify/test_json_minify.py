@@ -65,22 +65,23 @@ class JsonMinifyTestCase(unittest.TestCase):
         ]
     ]
 
-    def template(self, in_string, expected):
+    def template(self, index):
+        in_string, expected = self.tests[index - 1]
         in_dict = json.loads(json_minify(in_string))
         expected_dict = json.loads(textwrap.dedent(expected))
         self.assertEqual(in_dict, expected_dict)
 
     def test_1(self):
-        self.template(*self.tests[0])
+        self.template(1)
 
     def test_2(self):
-        self.template(*self.tests[1])
+        self.template(2)
 
     def test_3(self):
-        self.template(*self.tests[2])
+        self.template(3)
 
     def test_4(self):
-        self.template(*self.tests[3])
+        self.template(4)
 
 if __name__ == '__main__':
     unittest.main()
