@@ -8,7 +8,7 @@
 		global.JSON = {};
 	}
 
-	global.JSON.minify = function(json) {
+	function minify(json) {
 
 		var tokenizer = /"|(\/\*)|(\*\/)|(\/\/)|\n|\r/g,
 			in_string = false,
@@ -57,5 +57,9 @@
 		}
 		new_str[ns++] = rc;
 		return new_str.join("");
-	};
+	}
+	global.JSON.minify = minify;
+	if (typeof module != 'undefined' && module.exports) {
+		module.exports = minify;
+	}
 })(this);
