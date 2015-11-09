@@ -1,0 +1,18 @@
+{
+	"name": "node-json-minify",
+	"version": "0.1.4-a",
+	"description": "minifies blocks of JSON-like content into valid JSON by removing all whitespace *and* comments",
+	"main": "json.minify.js",
+	"scripts": {
+		"test": "node tests.js"
+	},
+	"keywords": ["util", "json", "minify"],
+	"author": "Kyle Simpson <getify@gmail.com>",
+	"contributors": [
+		{
+			"name": "Nathan Hanna",
+			"email": "semanio@gmail.com"
+		}
+	],
+	"repository": "git://github.com/getify/JSON.minify.git"
+}
