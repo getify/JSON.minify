@@ -14,5 +14,5 @@
 			"email": "semanio@gmail.com"
 		}
 	],
-	"repository": "git://github.com/getify/JSON.minify.git"
+	"repository": "git://github.com/getify/JSON.minify.git#node"
 }
