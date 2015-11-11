@@ -1,6 +1,6 @@
 {
 	"name": "node-json-minify",
-	"version": "0.1.4-a",
+	"version": "1.0.0",
 	"description": "minifies blocks of JSON-like content into valid JSON by removing all whitespace *and* comments",
 	"main": "json.minify.js",
 	"scripts": {
