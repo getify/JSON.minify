@@ -55,7 +55,7 @@ class JsonMinifyTestCase(unittest.TestCase):
             {"/*":"*/","//":"",/*"//"*/"/*/"://
             "//"}''',
             '''
-            {"/*":"*/","//":"",        "/*/":  
+            {"/*":"*/","//":"",        "/*/": \x20
             "//"}''',
             '{"/*":"*/","//":"","/*/":"//"}'
         ],
@@ -105,13 +105,18 @@ class JsonMinifyTestCase(unittest.TestCase):
 
     def template(self, index):
         in_string, expected_whitespace, expected = self.tests[index - 1]
-        self._space_template(in_string, expected_whitespace)
-
         in_dict = json.loads(json_minify(in_string))
-        whitespace_dict = json.loads(json_minify(expected_whitespace))
         expected_dict = json.loads(textwrap.dedent(expected))
         self.assertEqual(in_dict, expected_dict)
-        self.assertEqual(whitespace_dict, expected_dict)
+
+        with_whitespace = json_minify(in_string, strip_space=False)
+        with_whitespace_dict = json.loads(with_whitespace)
+        self.assertEqual(expected_whitespace, with_whitespace)
+        self.assertEqual(with_whitespace_dict, expected_dict)
+
+        no_whitespace = json_minify(with_whitespace)
+        no_whitespace_dict = json.loads(no_whitespace)
+        self.assertEqual(no_whitespace_dict, expected_dict)
 
     def test_1(self):
         self.template(1)
@@ -124,28 +129,6 @@ class JsonMinifyTestCase(unittest.TestCase):
 
     def test_4(self):
         self.template(4)
-
-    def _space_template(self, in_string, expected):
-        actual = json_minify(in_string, strip_space=False)
-        self.assertEqual(actual, expected)
-
-    def test_space_keeping(self):
-        self._space_template('', '')
-        self._space_template('\n', '\n')
-        self._space_template(' \r\n ', ' \r\n ')
-        self._space_template('\t', '\t')
-
-    def test_space_after_comments(self):
-        self._space_template('//', '  ')
-        self._space_template('// ', '   ')
-        self._space_template('//\n ', '  \n ')
-        self._space_template('//  \n ', '    \n ')
-        self._space_template('/**/', '    ')
-        self._space_template('/**/\n ', '    \n ')
-        self._space_template('/*\n*/\n ', '  \n  \n ')
-
-    def test_single_line_within_multi_line_comment(self):
-        self._space_template('/* \n// \n */\n   ', '   \n   \n   \n   ')
 
 
 if __name__ == '__main__':
