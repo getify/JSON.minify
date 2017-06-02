@@ -35,6 +35,10 @@ def json_minify(string, strip_space=True):
                 # replace white space as defined in standard
                 tmp = re.sub('[ \t\n\r]+', '', tmp)
             new_str.append(tmp)
+        elif not strip_space:
+            # Replace comments with white space so that the JSON parser reports
+            # the correct column numbers on parsing errors.
+            new_str.append(' ' * (match.start() - index))
 
         index = match.end()
         val = match.group()
@@ -53,10 +57,18 @@ def json_minify(string, strip_space=True):
                 in_single = True
         elif val == '*/' and in_multi and not (in_string or in_single):
             in_multi = False
+            if not strip_space:
+                new_str.append(' ' * len(val))
         elif val in '\r\n' and not (in_multi or in_string) and in_single:
             in_single = False
         elif not ((in_multi or in_single) or (val in ' \r\n\t' and strip_space)):  # noqa
             new_str.append(val)
+
+        if not strip_space:
+            if val in '\r\n':
+                new_str.append(val)
+            elif in_multi or in_single:
+                new_str.append(' ' * len(val))
 
     new_str.append(string[index:])
     return ''.join(new_str)
