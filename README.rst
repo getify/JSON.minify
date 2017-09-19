@@ -1,19 +1,33 @@
-# JSON-minify
+JSON-minify
+============
 
 A port of the `JSON-minify` utility to the Python language.
 
-## Overview
+Overview
+--------
 
 `JSON-minify` minifies blocks of JSON-like content into valid JSON by removing all whitespace *and* JS-style comments (single-line `//` and multiline `/* .. */`).
 
 With `JSON-minify`, you can maintain developer-friendly JSON documents, but minify them before parsing or transmitting them over-the-wire.
 
-## Testing
+Installation
+------------
+
+This package is currently not hosted on PyPI. You can install it using pip as follows:
+
+```
+pip install git+https://github.com/getify/JSON.minify@python
+```
+
+Testing
+-------
+
 To run the tests, just execute json_minify.py, i.e.
 
     python json_minify.py
 
-## License
+License
+-------
 
 The code and all the documentation are released under the MIT license.
 
