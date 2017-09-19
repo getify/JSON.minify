@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open("README.md") as f:
     long_description = f.read()
@@ -7,7 +7,6 @@ setup(
     # Metadata
     name="JSON_minify",
     version="0.2.0",
-    packages=find_packages(),
     include_package_data=True,
     license='MIT License',
     description=(
@@ -20,9 +19,8 @@ setup(
     maintainer="Johannes Wilm",
     maintainer_email="johannes@fiduswriter.org",
 
-    packages=["json_minify"],
+    packages=find_packages(),
 
-    license="MIT",
     classifiers=[
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 3",
