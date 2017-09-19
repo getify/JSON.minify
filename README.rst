@@ -13,16 +13,17 @@ With `JSON-minify`, you can maintain developer-friendly JSON documents, but mini
 Installation
 ------------
 
-This package is currently not hosted on PyPI. You can install it using pip as follows:
+This package is currently not hosted on PyPI. You can install it using pip as follows::
 
-```
-pip install git+https://github.com/getify/JSON.minify@python
-```
+     pip install git+https://github.com/getify/JSON.minify@python
+
 
 Testing
 -------
 
-To run the tests, just execute json_minify.py, i.e.
+To run the tests, just execute json_minify.py.
+
+::
 
     python json_minify.py
 
