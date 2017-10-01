@@ -1,28 +1,26 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
-try:
-    with open("README.md") as f:
-        long_description = f.read()
-except OSError:
-    long_description = ""
+with open("README.md") as f:
+    long_description = f.read()
 
 setup(
     # Metadata
     name="JSON_minify",
-    version="0.2.0",
+    version="0.2.1",
+    include_package_data=True,
+    license='MIT License',
     description=(
-        "A simple script to minify valid JSON, containing C/C++ style comments"
+        "A simple script to minify valid JSON, containing JavaScript comments"
     ),
     long_description=long_description,
-    url="https://github.com/getify/JSON.minify/tree/python",
+    url="https://github.com/fiduswriter/JSON.minify/tree/python",
     author="Gerald Storer",
 
-    maintainer="Pradyun S. Gedam",
-    maintainer_email="pradyunsg@gmail.com",
+    maintainer="Johannes Wilm",
+    maintainer_email="johannes@fiduswriter.org",
 
-    packages=["json_minify"],
+    packages=find_packages(),
 
-    license="MIT",
     classifiers=[
         "Programming Language :: Python :: 2",
         "Programming Language :: Python :: 3",
