@@ -9,7 +9,7 @@ except OSError:
 setup(
     # Metadata
     name="JSON_minify",
-    version="0.3.0",
+    version="0.3.1-dev",
     description=(
         "A simple script to minify valid JSON, containing C/C++ style comments"
     ),
