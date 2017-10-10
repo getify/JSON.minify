@@ -8,7 +8,7 @@ Overview
 
 `JSON-minify` minifies blocks of JSON-like content into valid JSON by removing
 all whitespace *and* JS-style comments (single-line `//` and multi-line
- `/* .. */`).
+`/* .. */`).
 
 With `JSON-minify`, you can maintain developer-friendly JSON documents, but
 minify them before parsing or transmitting them over-the-wire.
