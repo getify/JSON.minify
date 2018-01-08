@@ -1,0 +1,19 @@
+{
+    // COMMENT
+    "key1": /* COMMENT */ "value1",
+    "key2": 4, /*COMMENT*/
+    "key3": false,
+    /* COMMENT
+     * COMMENT
+     * COMMENT */
+    "key4": /*
+    COMMENT
+ */ [
+        "str1", "str2", "str3"
+    ],
+    "key5" : // COMMENT
+    {
+        "key51": "test/* ",
+        "key52": "test /* */ test "
+    }
+}

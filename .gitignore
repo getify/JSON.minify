@@ -56,3 +56,9 @@ docs/_build/
 
 # PyBuilder
 target/
+
+json_minify/#JSON_minify\.pm#
+
+*.pm~
+
+json_minify/\.#JSON_minify\.pm

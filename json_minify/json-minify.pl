@@ -1,17 +1,19 @@
 #/usr/bin/perl
+
+BEGIN{push @INC, '.'}
+
 use strict;
 use warnings;
-my $oc = 0;
-while (<>) {
-    chomp;
-    s/\/\*([^*][^\/]|.)*\*\///g;
-    if (m/^([^\/][^*]|.)*\*\// && $oc == 1) { $oc = 0;}
-    if (m/\/\*([^*][^\/]|.)*$/ && $oc == 0) { $oc = 1;}
-    s/\/\*([^*][^\/]|.)*$//;
-    s/^([^*][^\/]|.)*\*\///;
-    s/\s*\/\/.*$//g;
-    s/\s+//g;
-    if ($oc == 0) {print "$_";}
+use JSON_minify;
 
-}
-print "\n";
+my $minifier = JSON_minify->new();
+print "Processing test/simple.json ...";
+$minifier->minify_file("test/simple.json", "test/resultsimple.json");
+system("diff test/expectedsimple.json test/resultsimple.json");
+print "Processing test/test0.json ...";
+$minifier->minify_file("test/test0.json", "test/result0.json");
+system("diff test/expectedresult0.json test/result0.json");
+print "Processing test/test1.json ...";
+$minifier->minify_file("test/test1.json", "test/result1.json");
+system("diff test/expectedresult1.json test/result1.json");
+
