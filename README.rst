@@ -1,39 +1,37 @@
 JSON-minify
 ============
 
-A port of the `JSON-minify` utility to the Python language.
+A port of the `JSON-minify` utility to the Perl language.
 
 Overview
 --------
 
-`JSON-minify` minifies blocks of JSON-like content into valid JSON by removing
+`JSON_minify.pm` minifies blocks of JSON-like content into valid JSON by removing
 all whitespace *and* JS-style comments (single-line `//` and multi-line
 `/* .. */`).
 
-With `JSON-minify`, you can maintain developer-friendly JSON documents, but
+With `JSON_minify.pl`, you can maintain developer-friendly JSON documents, but
 minify them before parsing or transmitting them over-the-wire.
 
 Installation
 ------------
 
-You can install using pip as follows::
+You can install using Perl standard Makefile.PL as follows::
 
-     pip install JSON-minify
+     perl Makefile.PL
+     make
 
-If you wish to use the development version fo JSON-minify, you can install it
+If you wish to use the development version of JSON_minify.pm, you can install it
 as follows::
 
-     pip install git+https://github.com/getify/JSON.minify@python
+     make install
 
 
 Testing
 -------
 
-To run the tests, just execute json_minify.py.
+Test are automatically run when build as the standard procedure for Perl packahe distribution
 
-::
-
-    python json_minify.py
 
 License
 -------
