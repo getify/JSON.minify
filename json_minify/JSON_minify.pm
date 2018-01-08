@@ -21,35 +21,9 @@
 ## LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
 ## FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 ## IN THE SOFTWARE.
-## 
+##
 
-=head1 NAME
-
-JSON_minify.pm - minify a JSON and also remove comments
-
-=head1 SYNOPSIS
-
- use JSON_minify;
- my $minifier = JSON_minify->new();
- my $json_string = "<a json contents with comments>";
- my $minified_json = $minifier->minify_string($json_string, 0);
-
-=head1 DESCRIPTION
-
- This module provides a unique method for minifying a json string. This 
- string may eventually contains some C/C++ like comments. The minify_string
- method accept two arguments. First the json content as a string, and a
- boolean for striping_space (default is: space stripped).
-
-=head2 Exports
- 
-=over
-
-=item :minify_string 
-
-=back
-
-=cut
+our $VERSION = '1.0';
 
 package JSON_minify;
 
@@ -149,3 +123,34 @@ sub minify_string {
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+JSON_minify.pm - minify a JSON and also remove comments
+
+=head1 SYNOPSIS
+
+ use JSON_minify;
+ my $minifier = JSON_minify->new();
+ my $json_string = "<a json contents with comments>";
+ my $minified_json = $minifier->minify_string($json_string, 0);
+
+=head1 DESCRIPTION
+
+ This module provides a unique method for minifying a json string. This 
+ string may eventually contains some C/C++ like comments. The minify_string
+ method accept two arguments. First the json content as a string, and a
+ boolean for striping_space (default is: space stripped).
+
+=head2 Exports
+ 
+=over
+
+=item :minify_string 
+
+=back
+
+=cut
+
