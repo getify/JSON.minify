@@ -31,6 +31,7 @@ You can build & install using Perl standard `Makefile.PL` as follows::
 
      perl Makefile.PL
      make
+     make test
 
 If you wish to use the development version of `JSON_minify.pm`, you can install it
 as follows::
@@ -41,7 +42,8 @@ as follows::
 Testing
 -------
 
-Test are automatically run when build as the standard procedure for Perl package distribution
+Test are automatically run when build as the standard procedure for Perl package
+distribution (the make test command).
 
 
 License
