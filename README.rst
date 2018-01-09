@@ -58,6 +58,12 @@ in the json_minify directory after building it (see installation).
 This command will generate a JSON_minify-1.0.tar.gz file containing
 a distributable perl module (the module you get from cpan).
 
+Once terminated, you can real clean package by using::
+
+  make realclean
+
+This command will remove all intermediate build files and directories.
+
 License
 -------
 

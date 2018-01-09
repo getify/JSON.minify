@@ -39,8 +39,6 @@
 
 our $VERSION = '1.0';
 
-BEGIN{push @INC, '/home/cohen/Sources/JSON-minify/json_minify/lib'}
-
 use strict;
 use warnings;
 use Getopt::Long;
@@ -139,7 +137,8 @@ __END__
 
 =item B<--strip|-s>
 
-    Allows to strip spaces from the json content stream
+    Allows to strip spaces from the json content stream. This
+    options is negatable, you can use --no-strip to disable strip.
 
 =item B<--help|-h>
 

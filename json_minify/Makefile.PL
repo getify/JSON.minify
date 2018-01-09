@@ -43,8 +43,10 @@ my %args = (
         resources        => {
             repository   => $MAIN_REPO,
         },
-        keywords         => [qw [ "JSON", "minifier", "comments", "C/C++" ]],
+        keywords         => [qw [ JSON, minifier, comments, C/C++ ]],
     },
+    EXE_FILES            => [qw [ bin/json_minify.pl ]],
+    INSTALLBIN           => "/usr/bin/install"
 );
 
 $args {META_MERGE} {build_requires} ||= {
