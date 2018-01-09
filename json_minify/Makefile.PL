@@ -43,7 +43,7 @@ my %args = (
         resources        => {
             repository   => $MAIN_REPO,
         },
-        keywords         => [qw [ ]],
+        keywords         => [qw [ "JSON", "minifier", "comments", "C/C++" ]],
     },
 );
 
