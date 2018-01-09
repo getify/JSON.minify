@@ -38,3 +38,25 @@
 ## !!Now only a placeholder until I write it...!
 
 our $VERSION = '1.0';
+
+
+
+BEGIN{push @INC, '/home/cohen/Sources/JSON-minify/json_minify/lib'}
+
+use strict;
+use warnings;
+use JSON_minify;
+
+my $fhi;
+open($fhi, "<:encoding(UTF-8)", $::main::ARGV[0])
+    or die "Error: Cannot open '".$::main::ARGV[0]."': $!\n";
+binmode $fhi;
+my $clang_tidy;
+while (<$fhi>)
+{
+    $clang_tidy .= $_;
+}
+close ($fhi);
+
+my $minifier = JSON_minify->new();
+print $minifier->minify_string($clang_tidy, 0);

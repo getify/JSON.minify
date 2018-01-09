@@ -35,33 +35,63 @@ sub new {
     return bless {}, $class;
 }
 
+##
+## minify_string
+##
+## Minify a json content available in the 2nd input parameter 'input_string'
+##
 sub minify_string {
+    # self param: the object instance
     my $self = shift;
+    # input_string param: a string containing json
     my $input_string = shift;
-    my $strip_space = shift || 1;
+    # strip_space param: a boolean that specify if caller 
+    # wants to strip spaces
+    my $strip_space = (@_ ? shift : 1);
 
+    # Returned value: a string containing the minified json
     my $new_str = "";
+    # Current position of processing in input content
     my $index = 0;
 
+    # Flag indicating if processing is currently inside a multi line comment
     my $in_multi = 0;
+    # Flag indicating if processing is currently inside a single line comment
     my $in_single = 0;
+    # Flag indicating if processing is currently inside a string
     my $in_string = 0;
+    # Flag indicating if processing is currently inside a comment (single or multi)
     my $in_comment = 0;
 
+    # Let's iterate on every match for each token
+    # This is actually a tokenization
+    # Token of interrest are ", /*, */, //, \n, \r, \t, and space
+    # Regex options are GLOBAL & MULTILINE
     while ($input_string =~ m/("|(\/\*)|(\*\/)|(\/\/)|[[:space:]])/gm)
     {
-        # Initialize context
-        my $group = $1;
+        # Initialize context for this match
+        # First the match itself (which is group 1)
+        my $token = $1;
+        # Its position in the content
         my $input_pos = pos $input_string;
-        my $group_len = defined $group ? length $group : 1;
+        # And its length.
+        # FIXME: Should always match till end of string, so defined not useful anymore
+        # Should replace with:
+        # my $token_len = length $token;
+        my $token_len = defined $token ? length $token : 1;
 
+        # Integrate in_comment value
         $in_comment = $in_multi || $in_single;
         # if not in a comment
         if (!$in_comment)
         {
-            # Get the sub string between previous pos and now pos
-            my $len = ($input_pos - $index - $group_len);
+            # Get the substring between previous pos and now pos
+            my $len = ($input_pos - $index - $token_len);
+            # If len < 0, set to 0
+            # FIXME: this was necessary because of a bug later that has been fixed.
+            #        I should now be able remove it
             if ($len == -1) {$len = 0;}
+            # Get the sub string
             my $tmp = substr $input_string, $index, $len;
             
             ## Eventually strip spaces
@@ -73,50 +103,82 @@ sub minify_string {
         elsif (! $strip_space)
         {
             # we replace the substring with spaces
-            $new_str .= ' ' x ($input_pos - $index - $group_len);
+            $new_str .= ' ' x ($input_pos - $index - $token_len);
         }
+
+        # As we copied the input chars, let's set index to actual position
         $index = $input_pos;
-        my $val = $group;
+        # And get the match in a temporary
+        ##my $val = $token;
         # If we are closing a string (in string, tok is a dbl quote and not in comment)
-        if ($val eq '"' && ! $in_comment)
+        if ($token eq '"' && ! $in_comment)
         {
+            # Get the left context of the match
             my $leftcontext = substr($input_string, 0, $input_pos-1);
+            # Match it searching for a string of backslash (i.e. \ or \\ or \\\ etc)
+            # at the end of the string
             (my $escaped = $leftcontext) =~ m/(\\)*$/;
+            # Get length of match
             my $escaped_full_len = length $& || '';
 
-            # We are either at start of string or unescaped dbl quote (end of string)
+            # We got a dbl quote, then
+            # we are either at start of string or unescaped dbl quote (end of string)
+            # if not in string, then a string is starting OR
+            # in string and no backslash at all, we close the string OR
+            # in string and even number of backslash (dbl quote is not backslashed)
+            # then we close the string also
             if (! $in_string || ! defined $1 || ($escaped_full_len % 2 == 0))
             {
+                # Then change the in string flag to its negated value
                 $in_string = $in_string ? 0 : 1;
             }
+            # Let's go back one char to put the dbl quote in the new_string at next iteration
             $index--;
         }
+        # Else if we are neither in string nor in comment
         elsif (! ($in_string || $in_comment))
         {
-            if ($val eq '/*') {$in_multi = 1; }
-            elsif ($val eq '//') {$in_single = 1; }
+            # Check that token is '/*', then start a multi comment 
+            if ($token eq '/*') {$in_multi = 1; }
+            # Or check that token is '//', then start a single comment 
+            elsif ($token eq '//') {$in_single = 1; }
         }
-        elsif ($val eq '*/' && $in_multi && !($in_string || $in_single))
+        # Else if token is closing multi and we are in multi and we are not 
+        # in string neither in single 
+        elsif ($token eq '*/' && $in_multi && !($in_string || $in_single))
         {
+            # Multi line comment reached its end: unset flag in_multi
             $in_multi = 0;
-            if (! $strip_space) {$new_str .= ' ' x length($val);}
+            # If we d'ont strip spaces, let's add spaces for 
+            # token (same length to preserve indentation)
+            if (! $strip_space) {$new_str .= ' ' x length($token);}
         }
-        elsif (($val eq "\r" || $val eq "\n") && ! $in_multi && $in_single)
+        # Else if token is some kind of cariage return and we are not in multiline
+        # comment and we are in single line comment
+        elsif (($token eq "\r" || $token eq "\n") && ! $in_multi && $in_single)
         {
+            # Single line comment reached its end: unset flag in_single
             $in_single = 0;
         }
+        # Else if we are not in any comment at all, token is any kind of space
+        # and we do not strip space
         elsif (! $in_comment || 
-               (($val eq ' ' || $val eq "\r" || $val eq "\n" || $val eq "\t") && 
-                !$strip_space))
+               (($token eq ' ' || $token eq "\r" || $token eq "\n" || $token eq "\t") && 
+                ! $strip_space))
         {
-            $new_str .= $val;
+            # Then add these spaces to the new string
+            $new_str .= $token;
         }
+        # Set in_comment flag value according to its compositing ones
         $in_comment = $in_single || $in_multi;
 
+        # If we do not strip spaces
         if (!$strip_space)
         {
-            if ($val eq '\r' || $val eq '\n') {$new_str .= $val; }
-            elsif ($in_multi || $in_single) {$new_str .= (' ' x length($val)); }
+            # We need to replace separating tokens with spaces
+            if ($token eq "\r" || $token eq "\n") {$new_str .= $token; }
+            # or to replace comments tokens characters with spaces 
+            elsif ($in_comment) {$new_str .= (' ' x length($token)); }
         }
     }
     $new_str .= substr $input_string, $index;
