@@ -52,11 +52,11 @@ my $in_str5 = "{\"foo\": \"ba\\\"r//\", \"bar\\\\\": \"b\\\\\\\"a/*z\",\n    \"b
 ##
 ## Test output strings
 ##
-my $out_str1 = '{"key1":"value1","key2":4,"key3":false,"key4":["str1","str2","str3"],"key5":{"key51":"test ","key52":"test /* */ test "}}';
-my $out_str2 = "{\"foo\":\"bar\",\"bar\":[\"baz\",\"bum\",\"zam\"],\"something\":10,\"else\":20}";
-my $out_str3 = "{\"/*\":\"*/\",\"//\":\"\",\"/*/\":\"//\"}";
-my $out_str4 = "{\"foo\":\"bar/*\",\"b\\\"az\":\"blah\"}";
-my $out_str5 = "{\"foo\":\"ba\\\"r//\",\"bar\\\\\":\"b\\\\\\\"a/*z\",\"baz\\\\\\\\\":\"fo\\\\\\\\\\\"*/o\"}";
+my $out_str1 = "{\n           \n\"key1\":               \"value1\",\n\"key2\":4,           \n\"key3\":false,\n           \n\n                    \n\n                        \n\"key4\":  \n\n               \n\n    [\n\"str1\",\"str2\",\"str3\"\n],\n\"key5\":           \n{\n\"key51\":\"test \",\n\"key52\":\"test /* */ test \"\n}\n}\n";
+my $out_str2 = "\n                                           \n{\n\"foo\":\"bar\",                  \n\"bar\":[\n\"baz\",\"bum\",\"zam\"\n],\n                                                  \n\n	 	 	                                          \n\"something\":10,\n\"else\":20\n}\n\n                                                                  \n\n	 	 	                                                                     \n\n	 	 	                                                                 \n\n          \n";
+my $out_str3 = "\n{\"/*\":\"*/\",\"//\":\"\",        \"/*/\":  \n\"//\"}\n\n";
+my $out_str4 = "  \n\n                   \n\n                                {\n\n\"foo\"\n:\n\"bar/*\"             \n,\"b\\\"az\":  \n\n                           \"blah\"\n\n}\n";
+my $out_str5 = "{\"foo\":\"ba\\\"r//\",\"bar\\\\\":\"b\\\\\\\"a/*z\",\n\"baz\\\\\\\\\":           \"fo\\\\\\\\\\\"*/o\"\n}\n";
 
 ##
 ## Ok let's instantiate the minifier
@@ -66,31 +66,36 @@ my $minifier = JSON_minify->new();
 ##
 ## Test 1
 ##
-my $ret_str1 = $minifier->minify_string($in_str1);
+my $ret_str1 = $minifier->minify_string($in_str1, 0);
 ok ($out_str1 eq $ret_str1);
+print "'$out_str1'\n";
 
 ##
 ## Test 2
 ##
-my $ret_str2 = $minifier->minify_string($in_str2);
+my $ret_str2 = $minifier->minify_string($in_str2, 0);
 ok ($out_str2 eq $ret_str2);
+print "'$out_str1'\n";
 
 ##
 ## Test 3
 ##
-my $ret_str3 = $minifier->minify_string($in_str3);
+my $ret_str3 = $minifier->minify_string($in_str3, 0);
 ok ($out_str3 eq $ret_str3);
+print "'$out_str1'\n";
 
 ##
 ## Test 4
 ##
-my $ret_str4 = $minifier->minify_string($in_str4);
+my $ret_str4 = $minifier->minify_string($in_str4, 0);
 ok ($out_str4 eq $ret_str4);
+print "'$out_str1'\n";
 
 ##
 ## Test 5
 ##
-my $ret_str5 = $minifier->minify_string($in_str5);
+my $ret_str5 = $minifier->minify_string($in_str5, 0);
 ok ($out_str5 eq $ret_str5);
+print "'$out_str1'\n";
 
 __END__
