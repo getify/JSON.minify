@@ -16,21 +16,31 @@ minify them before parsing or transmitting them over-the-wire.
 Installation
 ------------
 
-You can install using Perl standard Makefile.PL as follows::
+You can get `JSON_minify` from CPAN. Please refer to https://www.cpan.org for help::
+
+     $ perl -MCPAN -e shell
+     Terminal does not support AddHistory.
+     
+     cpan shell -- CPAN exploration and modules installation (v2.11)
+     Enter 'h' for help.
+
+     cpan[1]> install JSON_minify
+        
+You can build & install using Perl standard `Makefile.PL` as follows::
 
      perl Makefile.PL
      make
 
-If you wish to use the development version of JSON_minify.pm, you can install it
+If you wish to use the development version of `JSON_minify.pm`, you can install it
 as follows::
 
-     make install
+     (sudo) make install
 
 
 Testing
 -------
 
-Test are automatically run when build as the standard procedure for Perl packahe distribution
+Test are automatically run when build as the standard procedure for Perl package distribution
 
 
 License
