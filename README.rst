@@ -26,6 +26,7 @@ You can get `JSON_minify` from CPAN. Please refer to https://www.cpan.org for he
 
      cpan[1]> install JSON_minify
         
+The json_minify directory contains a standard perl module for `JSON_minify`.
 You can build & install using Perl standard `Makefile.PL` as follows::
 
      perl Makefile.PL
