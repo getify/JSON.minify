@@ -66,3 +66,21 @@ json_minify/\.#JSON_minify\.pm
 *.json~
 
 *.yml~
+
+json_minify/MYMETA\.json
+
+json_minify/MYMETA\.yml
+
+json_minify/Makefile
+
+json_minify/blib/arch/
+
+json_minify/blib/bin/\.exists
+
+json_minify/blib/man1/
+
+json_minify/blib/man3/
+
+json_minify/blib/script/
+
+json_minify/pm_to_blib

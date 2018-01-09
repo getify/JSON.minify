@@ -35,14 +35,10 @@ BEGIN{
 }
 
 use Test;
-use Test::More;
 
-BEGIN {
-    use_ok ('JSON_minify') or
-        BAIL_OUT ("Loading of 'JSON_minify' failed");
-}
-
-ok defined $JSON_minify::VERSION, "VERSION correctly set to '".$JSON_minify::VERSION."'";
+plan tests => 5;
+    
+use JSON_minify;
 
 ##
 ## Test input strings
@@ -71,30 +67,30 @@ my $minifier = JSON_minify->new();
 ## Test 1
 ##
 my $ret_str1 = $minifier->minify_string($in_str1);
-ok ($out_str1 eq $ret_str1) , "test #1";
+ok ($out_str1 eq $ret_str1);
 
 ##
 ## Test 2
 ##
 my $ret_str2 = $minifier->minify_string($in_str2);
-ok ($out_str2 eq $ret_str2), "test #2";
+ok ($out_str2 eq $ret_str2);
 
 ##
 ## Test 3
 ##
 my $ret_str3 = $minifier->minify_string($in_str3);
-ok ($out_str3 eq $ret_str3), "test #3";
+ok ($out_str3 eq $ret_str3);
 
 ##
 ## Test 4
 ##
 my $ret_str4 = $minifier->minify_string($in_str4);
-ok ($out_str4 eq $ret_str4), "test #4";
+ok ($out_str4 eq $ret_str4);
 
 ##
 ## Test 5
 ##
 my $ret_str5 = $minifier->minify_string($in_str5);
-ok ($out_str5 eq $ret_str5), "test #5";
+ok ($out_str5 eq $ret_str5);
 
 __END__
