@@ -49,7 +49,7 @@ use JSON_minify;
 my $output = '-';
 my $help = 0;
 my $man = 0;
-my $strip = 0;
+my $strip = 1;
 
 GetOptions (
     "output|o=s" => \$output, 
@@ -139,6 +139,7 @@ __END__
 
     Allows to strip spaces from the json content stream. This
     options is negatable, you can use --no-strip to disable strip.
+    Default is strip.
 
 =item B<--help|-h>
 
