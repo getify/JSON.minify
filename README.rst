@@ -46,6 +46,18 @@ Test are automatically run when build as the standard procedure for Perl package
 distribution (the make test command).
 
 
+Distribution
+------------
+
+You can create a distribution archive by issuing::
+
+  cd json_minify
+  make dist
+  
+in the json_minify directory after building it (see installation).
+This command will generate a JSON_minify-1.0.tar.gz file containing
+a distributable perl module (the module you get from cpan).
+
 License
 -------
 
