@@ -8,54 +8,67 @@
 		global.JSON = {};
 	}
 
-	global.JSON.minify = function(json) {
-
-		var tokenizer = /"|(\/\*)|(\*\/)|(\/\/)|\n|\r/g,
-			in_string = false,
-			in_multiline_comment = false,
-			in_singleline_comment = false,
-			tmp, tmp2, new_str = [], ns = 0, from = 0, lc, rc
-		;
-
-		tokenizer.lastIndex = 0;
-
-		while (tmp = tokenizer.exec(json)) {
-			lc = RegExp.leftContext;
-			rc = RegExp.rightContext;
-			if (!in_multiline_comment && !in_singleline_comment) {
-				tmp2 = lc.substring(from);
-				if (!in_string) {
-					tmp2 = tmp2.replace(/(\n|\r|\s)*/g,"");
+	global.JSON.minify = function(s) {
+		let i=0, j, l=s.length, x=[], v
+		do {
+			v = s[i]
+			if(v=='/') {
+				if((i+1)==l) { x.push('/'); ++i; continue }
+				// single line comments
+				else if(s[i+1]=='/') {
+					i+=2
+					while(i<l && s[i]!="\n") i++
 				}
-				new_str[ns++] = tmp2;
-			}
-			from = tokenizer.lastIndex;
-
-			if (tmp[0] == "\"" && !in_multiline_comment && !in_singleline_comment) {
-				tmp2 = lc.match(/(\\)*$/);
-				if (!in_string || !tmp2 || (tmp2[0].length % 2) == 0) {	// start of string with ", or unescaped " character found to end string
-					in_string = !in_string;
+				// multiline comments
+				else if(s[i+1]=='*') {
+					i+=2
+					while(i<(l-1) && !(s[i]=='*' && s[i+1]=='/')) i++
+					i++ // skip last slash
 				}
-				from--; // include " character in next catch
-				rc = json.substring(from);
+				// not a comment
+				else {
+					x.push('/')
+				}
 			}
-			else if (tmp[0] == "/*" && !in_string && !in_multiline_comment && !in_singleline_comment) {
-				in_multiline_comment = true;
+			// ignore slashes in strings
+			else if(v=="'") {
+				x.push("'")
+				if((++i)>=l) continue
+				while(i<l && s[i]!="'") {
+					x.push(s[i]); i++;
+					if(s[i]=='\\'){
+						x.push('\\');
+						++i
+					}
+				}
+				if(i<l) x.push("'")
 			}
-			else if (tmp[0] == "*/" && !in_string && in_multiline_comment && !in_singleline_comment) {
-				in_multiline_comment = false;
+			else if(v=='"') {
+				x.push('"')
+				if((++i)>=l) continue
+				while(i<l && s[i]!='"') {
+					x.push(s[i]); i++;
+					if(s[i]=='\\'){
+						x.push('\\');
+						++i
+					}
+				}
+				if(i<l) x.push('"')
 			}
-			else if (tmp[0] == "//" && !in_string && !in_multiline_comment && !in_singleline_comment) {
-				in_singleline_comment = true;
+			else {
+				// don't include trailing commas in lists and objects
+				if(v==',') {
+					j = i+1
+					while(j<l && (s[j]=="\n" || s[j]=="\r" || s[j]==" " || s[j]=="\t")) j++
+					if(j<l && s[j]!=']' && s[j]!='}') {
+						x.push(v)
+						i = j-1    // skips whitespace
+					}
+				}
+				else if(v!="\n" && v!="\r" && v!=" " && v!="\t") x.push(v)
 			}
-			else if ((tmp[0] == "\n" || tmp[0] == "\r") && !in_string && !in_multiline_comment && in_singleline_comment) {
-				in_singleline_comment = false;
-			}
-			else if (!in_multiline_comment && !in_singleline_comment && !(/\n|\r|\s/.test(tmp[0]))) {
-				new_str[ns++] = tmp[0];
-			}
-		}
-		new_str[ns++] = rc;
-		return new_str.join("");
+			++i;
+		} while(i<l);
+		return x.join('');
 	};
 })(this);
