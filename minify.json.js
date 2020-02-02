@@ -47,10 +47,12 @@
 				x.push('"')
 				if((++i)>=l) continue
 				while(i<l && s[i]!='"') {
-					x.push(s[i]); i++;
 					if(s[i]=='\\'){
 						x.push('\\');
-						++i
+						x.push(s[i+1]);
+						i+=2
+					} else {
+						x.push(s[i]); i++;
 					}
 				}
 				if(i<l) x.push('"')
