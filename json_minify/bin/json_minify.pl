@@ -35,8 +35,6 @@
 ##
 
 
-## !!Now only a placeholder until I write it...!
-
 our $VERSION = '1.0';
 
 use strict;
@@ -51,7 +49,7 @@ my $help = 0;
 my $man = 0;
 my $strip = 1;
 
-GetOptions (
+7GetOptions (
     "output|o=s" => \$output, 
     "help|h+"   => \$help, 
     "man|m+"   => \$man, 
