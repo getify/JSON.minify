@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
 use Test::More;
+use Test::Pod;
 
 use strict;
 use warnings;
