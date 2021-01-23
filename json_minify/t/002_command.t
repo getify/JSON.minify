@@ -70,8 +70,10 @@ my $fhi;
 my $fho;
 open($fho, ">:encoding(UTF-8)", "/tmp/002_script.test1.json")
     or die("Cannot write to '/tmp/002_script.test1.json' for test1: $!");
+print $fho $in_str1, "\n";
+close($fho);
 system("./bin/json_minify.pl -o /tmp/002_script.test1.output.json /tmp/002_script.test1.json");    
-my $ret_str1;
+my $ret_str1 = "";
 open($fhi, "<:encoding(UTF-8)", "/tmp/002_script.test1.output.json")
     or die("Cannot read from '/tmp/002_script.test1.output.json' for test1: $!");
 while(<$fhi>)
