@@ -1,6 +1,8 @@
 bin/json_minify.pl
 MANIFEST
 t/000_basic.t
+t/001_nostrip.t
+t/002_command.t
 t/950_pod.t
 t/960_pod_coverage.t
 lib/JSON_minify.pm
