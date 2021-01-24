@@ -23,7 +23,7 @@
 ## IN THE SOFTWARE.
 ##
 
-our $VERSION = '1.0';
+our $VERSION = '1.1';
 
 package JSON_minify;
 
