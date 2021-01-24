@@ -12,5 +12,6 @@ plan skip_all => "Test::Pod::Coverage required for testing POD" if $@;
 
 all_pod_coverage_ok ({private => [qr /^/]});
 
+done_testing();
 
 __END__

@@ -34,7 +34,7 @@ BEGIN{
     our $r = eval "use Test::NoWarnings; 1" || 0;
 }
 
-use Test;
+use Test::More;
 
 plan tests => 5;
     
@@ -106,5 +106,7 @@ ok ($out_str4 eq $ret_str4);
 ##
 my $ret_str5 = $minifier->minify_string($in_str5);
 ok ($out_str5 eq $ret_str5);
+
+done_testing();
 
 __END__
