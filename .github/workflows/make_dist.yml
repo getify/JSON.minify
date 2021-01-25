@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: dist
+name: Dist file
 
 # Controls when the action will run. 
 on:
@@ -41,3 +41,10 @@ jobs:
           make all
           make test
           make dist
+
+      - name: 'Upload dist file Artifact'
+        uses: actions/upload-artifact@v2
+        with:
+          name: perl-dist-file
+          path: json_minify/JSON_minify-*.tar.gz
+          retention-days: 120
