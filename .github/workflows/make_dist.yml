@@ -47,4 +47,4 @@ jobs:
         with:
           name: perl-dist-file
           path: json_minify/JSON_minify-*.tar.gz
-          retention-days: 120
+          retention-days: 90
