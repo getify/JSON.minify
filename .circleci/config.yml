@@ -1,0 +1,9 @@
+version: 2
+jobs:
+  build:
+    machine:
+      enabled: true
+    steps:
+    - checkout
+    - run: ./build-n-test.sh
+    
