@@ -49,7 +49,7 @@ my $help = 0;
 my $man = 0;
 my $strip = 1;
 
-7GetOptions (
+GetOptions (
     "output|o=s" => \$output, 
     "help|h+"   => \$help, 
     "man|m+"   => \$man, 
@@ -84,7 +84,7 @@ if ($output eq '-')
 }
 else
 {
-    open($fho, "<:encoding(UTF-8)", $output)
+    open($fho, ">:encoding(UTF-8)", $output)
         or die "Error: Cannot open '$output' for writing: $!\n";
 }
 

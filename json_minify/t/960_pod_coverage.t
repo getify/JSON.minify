@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
 use Test::More;
+use Test::Pod::Coverage;
 
 use strict;
 use warnings;
@@ -11,5 +12,6 @@ plan skip_all => "Test::Pod::Coverage required for testing POD" if $@;
 
 all_pod_coverage_ok ({private => [qr /^/]});
 
+done_testing();
 
 __END__

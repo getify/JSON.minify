@@ -39,6 +39,8 @@ my %args = (
             'warnings'           => 0,
             'Test::More'         => 0,
             'Test::NoWarnings'   => 0,
+            'Test::Pod'          => 1,
+            'Test::Pod::Coverage'=> 1,
         },
         resources        => {
             repository   => $MAIN_REPO,
