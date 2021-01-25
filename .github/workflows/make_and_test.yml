@@ -29,8 +29,8 @@ jobs:
       - name: Run a multi-line script
         run: |
           cd json_minify
-          cpan -f -i Test::Pod || true
-          cpan -f -i Test::Pod::Coverage || true
+          sudo cpan -f -i Test::Pod || true
+          sudo cpan -f -i Test::Pod::Coverage || true
           perl Makefile.PL
           make all
           make test
