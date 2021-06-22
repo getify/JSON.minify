@@ -2,7 +2,7 @@
 
 A port of the `JSON-minify` utility to the LabVIEW (G) language.
 
-This code was developed using the [LabVIEW 2020 SP1 Free Community Language](https://www.ni.com/pt-br/shop/labview/select-edition/labview-community-edition.html).
+This code was developed using the [LabVIEW 2020 SP1 Free Community Edition](https://www.ni.com/pt-br/shop/labview/select-edition/labview-community-edition.html).
 
 ## Overview
 
