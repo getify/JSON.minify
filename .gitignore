@@ -1,0 +1,18 @@
+# Packed libraries
+*.lvlibp
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+[Tt]humbs.db
+
+# Executables
+*.exe
+*.rtexe
+
+# Metadata
+*.aliases
+*.lvlps
+.cache/
