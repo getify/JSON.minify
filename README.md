@@ -1,6 +1,8 @@
 # JSON-minify
 
-A port of the `JSON-minify` utility to the [target-language-name] language.
+A port of the `JSON-minify` utility to the LabVIEW (G) language.
+
+This code was developed using the [LabVIEW 2020 SP1 Free Community Language](https://www.ni.com/pt-br/shop/labview/select-edition/labview-community-edition.html).
 
 ## Overview
 
@@ -13,6 +15,8 @@ With `JSON-minify`, you can maintain developer-friendly JSON documents, but mini
 Please see [PORTING.md](PORTING.md) for instructions.
 
 ## Testing
+
+This project uses for test the [Caraya Unit Test Framework](https://github.com/JKISoftware/Caraya).
 
 Please see [TESTING.md](TESTING.md) for example tests.
 
