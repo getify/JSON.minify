@@ -23,6 +23,6 @@ The first implementation of JSON minify was in JavaScript (as `JSON.minify`), bu
 ## Using JSON Minify
 Currently, JSON minify has been ported to multiple languages including PHP, Python, Objective C. Each of these ports live on a separate branch in the [Github repository][repo-link]. Language specific instructions can be found in their respective branches.
 
- [yahoo-groups-link]: http://tech.groups.yahoo.com/group/json/message/152
+ [yahoo-groups-link]: http://web.archive.org/web/20130101004216/http://tech.groups.yahoo.com/group/json/message/152
  [php-port]: https://github.com/getify/JSON.minify/tree/php
  [repo-link]: https://github.com/getify/JSON.minify
