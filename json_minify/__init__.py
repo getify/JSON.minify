@@ -18,7 +18,6 @@ import re
 
 def json_minify(string, strip_space=True):
     tokenizer = re.compile('"|(/\*)|(\*/)|(//)|\n|\r')
-    end_slashes_re = re.compile(r'(\\)*$')
 
     in_string = False
     in_multi = False
@@ -44,10 +43,12 @@ def json_minify(string, strip_space=True):
         val = match.group()
 
         if val == '"' and not (in_multi or in_single):
-            escaped = end_slashes_re.search(string, 0, match.start())
+            pos = match.start()
+            while pos > 0 and string[pos - 1] == '\\':
+                pos -= 1
 
             # start of string or unescaped quote character to end string
-            if not in_string or (escaped is None or len(escaped.group()) % 2 == 0):  # noqa
+            if not in_string or (match.start() - pos) % 2 == 0:  # noqa
                 in_string = not in_string
             index -= 1  # include " character in next catch
         elif not (in_string or in_multi or in_single):
