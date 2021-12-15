@@ -72,4 +72,12 @@
 		new_str[ns++] = rc;
 		return new_str.join("");
 	};
-})(this);
+})(
+	// attempt to reference the global object
+	typeof globalThis != "undefined" ? globalThis :
+	typeof global != "undefined" ? global :
+	typeof window != "undefined" ? window :
+	typeof self != "undefined" ? self :
+	typeof this != "undefined" ? this :
+	{}
+);
