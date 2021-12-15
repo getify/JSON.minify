@@ -3,6 +3,8 @@
 ## JSON_minify.pm
 ## Copyright ©2018 Rémi Cohen-Scali
 ##
+## Patched by Kyle Simpson, 2021
+##
 ##
 ## Permission is hereby granted, free of charge, to any person obtaining a copy
 ## of this software and associated documentation files (the “Software”), to 
@@ -23,7 +25,7 @@
 ## IN THE SOFTWARE.
 ##
 
-our $VERSION = '1.1';
+our $VERSION = '2.0';
 
 package JSON_minify;
 
@@ -53,6 +55,8 @@ sub minify_string {
     my $new_str = "";
     # Current position of processing in input content
     my $index = 0;
+    # Previous match index
+    my $prevIndex = 0;
 
     # Flag indicating if processing is currently inside a multi line comment
     my $in_multi = 0;
@@ -106,6 +110,8 @@ sub minify_string {
             $new_str .= ' ' x ($input_pos - $index - $token_len);
         }
 
+        # Save previous index
+        $prevIndex = $index;
         # As we copied the input chars, let's set index to actual position
         $index = $input_pos;
         # And get the match in a temporary
@@ -117,6 +123,10 @@ sub minify_string {
             my $leftcontext = substr($input_string, 0, $input_pos-1);
             # Match it searching for a string of backslash (i.e. \ or \\ or \\\ etc)
             # at the end of the string
+            #
+            # FIXME: this match should start at the `$prevIndex` location
+            # to avoid a bad performance bug, but how to do that in perl?
+            # see: https://github.com/getify/JSON.minify/issues/64
             (my $escaped = $leftcontext) =~ m/(\\)*$/;
             # Get length of match
             my $escaped_full_len = length $& || '';
