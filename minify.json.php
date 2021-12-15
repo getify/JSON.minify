@@ -15,7 +15,8 @@ function json_minify($json) {
 	while (preg_match($tokenizer,$json,$tmp,PREG_OFFSET_CAPTURE,$lastIndex)) {
 		$tmp = $tmp[0];
 		$lastIndex = $tmp[1] + strlen($tmp[0]);
-		$lc = substr($json,0,$lastIndex - strlen($tmp[0]));
+		$prevFrom = $from;
+		$lc = substr($json,$prevFrom,$lastIndex - strlen($tmp[0]));
 		$rc = substr($json,$lastIndex);
 		if (!$in_multiline_comment && !$in_singleline_comment) {
 			$tmp2 = substr($lc,$from);
@@ -24,11 +25,10 @@ function json_minify($json) {
 			}
 			$new_str[] = $tmp2;
 		}
-		$prevFrom = $from;
 		$from = $lastIndex;
 
 		if ($tmp[0] == "\"" && !$in_multiline_comment && !$in_singleline_comment) {
-			preg_match("/(\\\\)*$/",$lc,$tmp2,PREG_PATTERN_ORDER,$prevFrom);
+			preg_match("/(\\\\)*$/",$lc,$tmp2);
 			if (!$in_string || !$tmp2 || (strlen($tmp2[0]) % 2) == 0) {	// start of string with ", or unescaped " character found to end string
 				$in_string = !$in_string;
 			}
