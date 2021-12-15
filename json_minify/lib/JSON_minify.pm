@@ -120,13 +120,9 @@ sub minify_string {
         if ($token eq '"' && ! $in_comment)
         {
             # Get the left context of the match
-            my $leftcontext = substr($input_string, 0, $input_pos-1);
+            my $leftcontext = substr($input_string, $prevIndex, $input_pos-1);
             # Match it searching for a string of backslash (i.e. \ or \\ or \\\ etc)
             # at the end of the string
-            #
-            # FIXME: this match should start at the `$prevIndex` location
-            # to avoid a bad performance bug, but how to do that in perl?
-            # see: https://github.com/getify/JSON.minify/issues/64
             (my $escaped = $leftcontext) =~ m/(\\)*$/;
             # Get length of match
             my $escaped_full_len = length $& || '';
