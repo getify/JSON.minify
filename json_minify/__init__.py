@@ -40,11 +40,12 @@ def json_minify(string, strip_space=True):
             # the correct column numbers on parsing errors.
             new_str.append(' ' * (match.start() - index))
 
+        last_index = index
         index = match.end()
         val = match.group()
 
         if val == '"' and not (in_multi or in_single):
-            escaped = end_slashes_re.search(string, 0, match.start())
+            escaped = end_slashes_re.search(string, last_index, match.start())
 
             # start of string or unescaped quote character to end string
             if not in_string or (escaped is None or len(escaped.group()) % 2 == 0):  # noqa
