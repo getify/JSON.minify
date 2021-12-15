@@ -38,6 +38,7 @@ public abstract class Minify {
         String tmp2;
         StringBuilder new_str = new StringBuilder();
         Integer from = 0;
+        Integer prevFrom;
         String lc;
         String rc = "";
 
@@ -63,11 +64,12 @@ public abstract class Minify {
 
                 new_str.append(tmp2);
             }
+            prevFrom = from;
             from = matcher.end();
 
             if (tmp.charAt(0) == '\"' && !in_multiline_comment && !in_singleline_comment) {
                 magicMatcher = MAGIC_PATTERN.matcher(lc);
-                foundMagic = magicMatcher.find();
+                foundMagic = magicMatcher.find(prevFrom);
                 if (!in_string || !foundMagic || (magicMatcher.end() - magicMatcher.start()) % 2 == 0) {
                     in_string = !in_string;
                 }
