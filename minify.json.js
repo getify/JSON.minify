@@ -1,5 +1,5 @@
 /*! JSON.minify()
-	v0.1 (c) Kyle Simpson
+	v0.2 (c) Kyle Simpson
 	MIT License
 */
 
@@ -8,13 +8,14 @@
 		global.JSON = {};
 	}
 
-	global.JSON.minify = function(json) {
+	global.JSON.minify = function JSON_minify(json) {
 
 		var tokenizer = /"|(\/\*)|(\*\/)|(\/\/)|\n|\r/g,
 			in_string = false,
 			in_multiline_comment = false,
 			in_singleline_comment = false,
-			tmp, tmp2, new_str = [], ns = 0, from = 0, lc, rc
+			tmp, tmp2, new_str = [], ns = 0, from = 0, lc, rc,
+			prevFrom
 		;
 
 		tokenizer.lastIndex = 0;
@@ -29,11 +30,24 @@
 				}
 				new_str[ns++] = tmp2;
 			}
+			prevFrom = from;
 			from = tokenizer.lastIndex;
 
+			// found a " character, and we're not currently in
+			// a comment? check for previous `\` escaping immediately
+			// leftward adjacent to this match
 			if (tmp[0] == "\"" && !in_multiline_comment && !in_singleline_comment) {
+				// limit left-context matching to only go back
+				// to the position of the last token match
+				//
+				// see: https://github.com/getify/JSON.minify/issues/64
+				lc.lastIndex = prevFrom;
+
+				// perform leftward adjacent escaping match
 				tmp2 = lc.match(/(\\)*$/);
-				if (!in_string || !tmp2 || (tmp2[0].length % 2) == 0) {	// start of string with ", or unescaped " character found to end string
+
+				// start of string with ", or unescaped " character found to end string?
+				if (!in_string || !tmp2 || (tmp2[0].length % 2) == 0) {
 					in_string = !in_string;
 				}
 				from--; // include " character in next catch
