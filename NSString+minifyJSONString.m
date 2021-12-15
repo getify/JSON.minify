@@ -5,6 +5,8 @@
 //  Created by Bödecs Tibor on 7/19/13.
 //  Copyright (c) 2013 Bödecs Tibor. All rights reserved.
 //
+//  Patched by Kyle Simpson, 2021
+//
 
 #import "NSString+minifyJSONString.h"
 
@@ -20,6 +22,7 @@
     NSString *tmp2;
     NSMutableArray *new_str = [@[] mutableCopy];
     int from = 0;
+    int prevFrom = 0;
     NSString *lc;
     NSString *rc;
     int lastIndex = 0;
@@ -53,12 +56,13 @@
             }
             [new_str addObject:tmp2];
         }
+        prevFrom = from;
         from = lastIndex;
         
         if ( [tmp hasPrefix:@"\""] && !in_multiline_comment && !in_singleline_comment) {
             NSArray *_matches = [magic matchesInString:lc
                                                options:0
-                                                 range:NSMakeRange(0, lc.length)];
+                                                 range:NSMakeRange(prevFrom, lc.length)];
             
             if (_matches.count > 0 ) {
                 NSTextCheckingResult *_match = _matches[0];
