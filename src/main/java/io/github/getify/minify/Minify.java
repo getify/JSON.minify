@@ -53,7 +53,8 @@ public abstract class Minify {
             matcher.reset();
 
         while (matcher.find()) {
-            lc = jsonString.substring(0, matcher.start());
+            prevFrom = from;
+            lc = jsonString.substring(prevFrom, matcher.start());
             rc = jsonString.substring(matcher.end(), jsonString.length());
             tmp = jsonString.substring(matcher.start(), matcher.end());
 
@@ -64,12 +65,11 @@ public abstract class Minify {
 
                 new_str.append(tmp2);
             }
-            prevFrom = from;
             from = matcher.end();
 
             if (tmp.charAt(0) == '\"' && !in_multiline_comment && !in_singleline_comment) {
                 magicMatcher = MAGIC_PATTERN.matcher(lc);
-                foundMagic = magicMatcher.find(prevFrom);
+                foundMagic = magicMatcher.find();
                 if (!in_string || !foundMagic || (magicMatcher.end() - magicMatcher.start()) % 2 == 0) {
                     in_string = !in_string;
                 }
