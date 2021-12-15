@@ -120,7 +120,7 @@ sub minify_string {
         if ($token eq '"' && ! $in_comment)
         {
             # Get the left context of the match
-            my $leftcontext = substr($input_string, $prevIndex, $input_pos-1);
+            my $leftcontext = substr($input_string, $prevIndex, $input_pos-1-$prevIndex);
             # Match it searching for a string of backslash (i.e. \ or \\ or \\\ etc)
             # at the end of the string
             (my $escaped = $leftcontext) =~ m/(\\)*$/;
