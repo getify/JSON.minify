@@ -123,7 +123,7 @@ sub minify_string {
             my $leftcontext = substr($input_string, $prevIndex, $input_pos-1-$prevIndex);
             # Match it searching for a string of backslash (i.e. \ or \\ or \\\ etc)
             # at the end of the string
-            (my $escaped = $leftcontext) =~ m/(\\\\)+$/;
+            (my $escaped = $leftcontext) =~ m/(\\)+$/;
             # Get length of match
             my $escaped_full_len = length $& || '';
 
