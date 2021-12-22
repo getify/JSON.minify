@@ -30,7 +30,7 @@
     NSRegularExpression *tokenizer = [NSRegularExpression regularExpressionWithPattern:@"\"|(\\/\\*)|(\\*\\/)|(\\/\\/)|\n|\r"
                                                                                options:NSRegularExpressionCaseInsensitive
                                                                                  error:nil];
-    NSRegularExpression *magic = [NSRegularExpression regularExpressionWithPattern:@"(\\\\)*$"
+    NSRegularExpression *magic = [NSRegularExpression regularExpressionWithPattern:@"(\\\\)+$"
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:nil];
     
