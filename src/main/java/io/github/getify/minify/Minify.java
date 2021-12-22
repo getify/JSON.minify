@@ -16,9 +16,9 @@ import java.util.regex.Pattern;
 public abstract class Minify {
 
     private static final String TOKENIZER = "\"|(/\\*)|(\\*/)|(//)|\\n|\\r";
-    private static final String MAGIC = "(\\\\)*$";
+    private static final String LOOKBEHIND = "(\\\\)+$";
     private static final Pattern PATTERN = Pattern.compile(TOKENIZER);
-    private static final Pattern MAGIC_PATTERN = Pattern.compile(MAGIC);
+    private static final Pattern LOOKBEHIND_PATTERN = Pattern.compile(LOOKBEHIND);
 
     /**
      *
@@ -38,6 +38,7 @@ public abstract class Minify {
         String tmp2;
         StringBuilder new_str = new StringBuilder();
         Integer from = 0;
+        Integer prevFrom;
         String lc;
         String rc = "";
 
@@ -52,21 +53,22 @@ public abstract class Minify {
             matcher.reset();
 
         while (matcher.find()) {
-            lc = jsonString.substring(0, matcher.start());
+            prevFrom = from;
+            lc = jsonString.substring(prevFrom, matcher.start());
             rc = jsonString.substring(matcher.end(), jsonString.length());
             tmp = jsonString.substring(matcher.start(), matcher.end());
 
             if (!in_multiline_comment && !in_singleline_comment) {
                 tmp2 = lc.substring(from);
                 if (!in_string)
-                    tmp2 = tmp2.replaceAll("(\\n|\\r|\\s)*", "");
+                    tmp2 = tmp2.replaceAll("(\\n|\\r|\\s)+", "");
 
                 new_str.append(tmp2);
             }
             from = matcher.end();
 
             if (tmp.charAt(0) == '\"' && !in_multiline_comment && !in_singleline_comment) {
-                magicMatcher = MAGIC_PATTERN.matcher(lc);
+                magicMatcher = LOOKBEHIND_PATTERN.matcher(lc);
                 foundMagic = magicMatcher.find();
                 if (!in_string || !foundMagic || (magicMatcher.end() - magicMatcher.start()) % 2 == 0) {
                     in_string = !in_string;
