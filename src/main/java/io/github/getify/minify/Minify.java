@@ -16,9 +16,9 @@ import java.util.regex.Pattern;
 public abstract class Minify {
 
     private static final String TOKENIZER = "\"|(/\\*)|(\\*/)|(//)|\\n|\\r";
-    private static final String MAGIC = "(\\\\)*$";
+    private static final String LOOKBEHIND = "(\\\\)+$";
     private static final Pattern PATTERN = Pattern.compile(TOKENIZER);
-    private static final Pattern MAGIC_PATTERN = Pattern.compile(MAGIC);
+    private static final Pattern LOOKBEHIND_PATTERN = Pattern.compile(LOOKBEHIND);
 
     /**
      *
@@ -61,14 +61,14 @@ public abstract class Minify {
             if (!in_multiline_comment && !in_singleline_comment) {
                 tmp2 = lc.substring(from);
                 if (!in_string)
-                    tmp2 = tmp2.replaceAll("(\\n|\\r|\\s)*", "");
+                    tmp2 = tmp2.replaceAll("(\\n|\\r|\\s)+", "");
 
                 new_str.append(tmp2);
             }
             from = matcher.end();
 
             if (tmp.charAt(0) == '\"' && !in_multiline_comment && !in_singleline_comment) {
-                magicMatcher = MAGIC_PATTERN.matcher(lc);
+                magicMatcher = LOOKBEHIND_PATTERN.matcher(lc);
                 foundMagic = magicMatcher.find();
                 if (!in_string || !foundMagic || (magicMatcher.end() - magicMatcher.start()) % 2 == 0) {
                     in_string = !in_string;
