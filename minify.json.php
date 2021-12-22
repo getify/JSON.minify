@@ -1,7 +1,7 @@
 <?php
 
 /*! JSON.minify()
-	v2.0 (c) Kyle Simpson
+	v3.0 (c) Kyle Simpson
 	MIT License
 */
 
@@ -21,14 +21,14 @@ function json_minify($json) {
 		if (!$in_multiline_comment && !$in_singleline_comment) {
 			$tmp2 = substr($lc,$from);
 			if (!$in_string) {
-				$tmp2 = preg_replace("/(\n|\r|\s)*/","",$tmp2);
+				$tmp2 = preg_replace("/(\n|\r|\s)+/","",$tmp2);
 			}
 			$new_str[] = $tmp2;
 		}
 		$from = $lastIndex;
 
 		if ($tmp[0] == "\"" && !$in_multiline_comment && !$in_singleline_comment) {
-			preg_match("/(\\\\)*$/",$lc,$tmp2);
+			preg_match("/(\\\\)+$/",$lc,$tmp2);
 			if (!$in_string || !$tmp2 || (strlen($tmp2[0]) % 2) == 0) {	// start of string with ", or unescaped " character found to end string
 				$in_string = !$in_string;
 			}
