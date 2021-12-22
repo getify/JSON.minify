@@ -25,7 +25,7 @@
 ## IN THE SOFTWARE.
 ##
 
-our $VERSION = '2.0';
+our $VERSION = '3.0';
 
 package JSON_minify;
 
@@ -99,7 +99,7 @@ sub minify_string {
             my $tmp = substr $input_string, $index, $len;
             
             ## Eventually strip spaces
-            if (! $in_string && $strip_space) {$tmp =~ s/[[:space:]]*//gm;}
+            if (! $in_string && $strip_space) {$tmp =~ s/[[:space:]]+//gm;}
             # And add it in final result
             $new_str .= $tmp;
         }
@@ -123,7 +123,7 @@ sub minify_string {
             my $leftcontext = substr($input_string, $prevIndex, $input_pos-1-$prevIndex);
             # Match it searching for a string of backslash (i.e. \ or \\ or \\\ etc)
             # at the end of the string
-            (my $escaped = $leftcontext) =~ m/(\\)*$/;
+            (my $escaped = $leftcontext) =~ m/(\\)+$/;
             # Get length of match
             my $escaped_full_len = length $& || '';
 
