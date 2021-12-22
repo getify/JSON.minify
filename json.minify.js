@@ -1,5 +1,5 @@
 /*! JSON.minify()
-	v0.2.0 (c) Kyle Simpson
+	v3.0.0 (c) Kyle Simpson
 	MIT License
 */
 
@@ -21,7 +21,7 @@ module.exports = function JSON_minify(json) {
 		if (!in_multiline_comment && !in_singleline_comment) {
 			tmp2 = lc.substring(from);
 			if (!in_string) {
-				tmp2 = tmp2.replace(/(\n|\r|\s)*/g,"");
+				tmp2 = tmp2.replace(/(\n|\r|\s)+/g,"");
 			}
 			new_str[ns++] = tmp2;
 		}
@@ -32,14 +32,12 @@ module.exports = function JSON_minify(json) {
 		// a comment? check for previous `\` escaping immediately
 		// leftward adjacent to this match
 		if (tmp[0] == "\"" && !in_multiline_comment && !in_singleline_comment) {
+			// perform look-behind escaping match, but
 			// limit left-context matching to only go back
 			// to the position of the last token match
 			//
 			// see: https://github.com/getify/JSON.minify/issues/64
-			lc.lastIndex = prevFrom;
-
-			// perform leftward adjacent escaping match
-			tmp2 = lc.match(/(\\)*$/);
+			tmp2 = lc.substring(prevFrom).match(/\\+$/);
 
 			// start of string with ", or unescaped " character found to end string?
 			if (!in_string || !tmp2 || (tmp2[0].length % 2) == 0) {
