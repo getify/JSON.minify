@@ -10,64 +10,89 @@
 
 	global.JSON.minify = function JSON_minify(json) {
 
-		var tokenizer = /"|(\/\*)|(\*\/)|(\/\/)|\n|\r/g,
-			in_string = false,
+		var in_string = false,
 			in_multiline_comment = false,
 			in_singleline_comment = false,
-			tmp, tmp2, new_str = [], ns = 0, from = 0, lc, rc,
-			prevFrom
-		;
+			backslash = false,
+			len = json.length,
+			i = 0,
+			c,
+			new_str = [],
+			from = 0,
+			new_chars = 0,
+			add_chars = 0;
 
-		tokenizer.lastIndex = 0;
-
-		while (tmp = tokenizer.exec(json)) {
-			lc = RegExp.leftContext;
-			rc = RegExp.rightContext;
-			if (!in_multiline_comment && !in_singleline_comment) {
-				tmp2 = lc.substring(from);
-				if (!in_string) {
-					tmp2 = tmp2.replace(/(\n|\r|\s)+/g,"");
+		while (i < len) {
+			backslash = !backslash && c == "\\"
+			c = json[i++];
+			if (in_singleline_comment) {
+				if (c == "\r" || c == "\n") {
+					in_singleline_comment = false;
 				}
-				new_str[ns++] = tmp2;
 			}
-			prevFrom = from;
-			from = tokenizer.lastIndex;
-
-			// found a " character, and we're not currently in
-			// a comment? check for previous `\` escaping immediately
-			// leftward adjacent to this match
-			if (tmp[0] == "\"" && !in_multiline_comment && !in_singleline_comment) {
-				// perform look-behind escaping match, but
-				// limit left-context matching to only go back
-				// to the position of the last token match
-				//
-				// see: https://github.com/getify/JSON.minify/issues/64
-				tmp2 = lc.substring(prevFrom).match(/\\+$/);
-
-				// start of string with ", or unescaped " character found to end string?
-				if (!in_string || !tmp2 || (tmp2[0].length % 2) == 0) {
+			else if (in_multiline_comment) {
+				if (c == "*") {
+					if (i >= len) {
+						break;
+					}
+					c = json[i++];
+					if (c == "/") {
+						in_multiline_comment = false;
+					}
+				}
+			}
+			else {
+				if (c == "\"" && !backslash) {
 					in_string = !in_string;
+					add_chars = 1;
 				}
-				from--; // include " character in next catch
-				rc = json.substring(from);
+				else if (in_string) {
+					if (c != "\n" && c != "\r") {
+						add_chars = 1;
+					}
+				}
+				else {
+					if (c == "/") {
+						if (i >= len) {
+							add_chars = 1;
+							if (new_chars == 0) {
+								from = i - add_chars;
+							}
+							new_chars += add_chars;
+							break;
+						}
+						backslash = !backslash && c == "\\"
+						c = json[i++];
+						if (c == "/") {
+							in_singleline_comment = true;
+						}
+						else if (c == "*") {
+							in_multiline_comment = true;
+						}
+						else {
+							add_chars = 2;
+						}
+					}
+					else if (c !== " " && c !== "\t" && c !== "\n" && c !== "\r") {
+						add_chars = 1;
+					}
+				}
 			}
-			else if (tmp[0] == "/*" && !in_string && !in_multiline_comment && !in_singleline_comment) {
-				in_multiline_comment = true;
+			if (add_chars > 0) {
+				if (new_chars == 0) {
+					from = i - add_chars;
+				}
+				new_chars += add_chars;
+				add_chars = 0;
 			}
-			else if (tmp[0] == "*/" && !in_string && in_multiline_comment && !in_singleline_comment) {
-				in_multiline_comment = false;
-			}
-			else if (tmp[0] == "//" && !in_string && !in_multiline_comment && !in_singleline_comment) {
-				in_singleline_comment = true;
-			}
-			else if ((tmp[0] == "\n" || tmp[0] == "\r") && !in_string && !in_multiline_comment && in_singleline_comment) {
-				in_singleline_comment = false;
-			}
-			else if (!in_multiline_comment && !in_singleline_comment && !(/\n|\r|\s/.test(tmp[0]))) {
-				new_str[ns++] = tmp[0];
+			else if (new_chars > 0) {
+				new_str.push(json.substring(from, from + new_chars));
+				new_chars = 0;
 			}
 		}
-		new_str[ns++] = rc;
+		if (new_chars > 0) {
+			new_str.push(json.substring(from, from + new_chars));
+		}
 		return new_str.join("");
 	};
 })(
