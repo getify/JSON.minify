@@ -55,6 +55,10 @@
 					if (c == "/") {
 						if (i >= len) {
 							add_chars = 1;
+							if (new_chars == 0) {
+								from = i - add_chars;
+							}
+							new_chars += add_chars;
 							break;
 						}
 						backslash = !backslash && c == "\\"
