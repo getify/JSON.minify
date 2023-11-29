@@ -11,9 +11,12 @@ Contributers:
     - Conditions and variable names changed
     - Reformatted tests and moved to separate file
     - Made into a PyPI Package
+  - Nathan Kulzer
+    - Hooked into json module, like the Javascript version
 """
 
 import re
+import json # to hook in
 
 
 def json_minify(string, strip_space=True):
@@ -73,3 +76,5 @@ def json_minify(string, strip_space=True):
 
     new_str.append(string[index:])
     return ''.join(new_str)
+
+json.minify = json_minify
