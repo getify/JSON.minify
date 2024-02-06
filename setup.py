@@ -30,4 +30,7 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Topic :: Utilities",
     ],
+    package_data={
+        "json_minify": ["*.pyi", "py.typed"]
+    }
 )
