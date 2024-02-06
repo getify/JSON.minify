@@ -1,0 +1,3 @@
+from typing import Any
+
+def json_minify(string: str, strip_space=True) -> Any: ...
