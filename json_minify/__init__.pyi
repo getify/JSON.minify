@@ -1,0 +1,3 @@
+import typing
+
+def json_minify(string: str, strip_space: bool = True) -> typing.Any: ...
